@@ -142,24 +142,28 @@ public class Polygon : MonoBehaviour
 		{
 		case "right":
 		{
+			currentDirection = "right";
 			vVelocity = 0f;
 			hVelocity = currentVelocity;
 			break;
 		}
 		case "left":
 		{
+			currentDirection = "left";
 			vVelocity = 0f;
 			hVelocity = -currentVelocity;
 			break;
 		}
 		case "up":
 		{
+			currentDirection = "up";
 			hVelocity = 0f;
 			vVelocity = currentVelocity;
 			break;
 		}
 		case "down":
 		{
+			currentDirection = "down";
 			hVelocity = 0f;
 			vVelocity = -currentVelocity;
 			break;
