@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Polygon : MonoBehaviour 
 {
-	static Vector2 OUT_OF_VIEW = new Vector2(1000f, 1000f);
+	static Vector2 OUT_OF_VIEW = new Vector2(-40f, -15f);
 	[Range(-100f, 100f)]
 	public float currentRotationSpeed;
 	[Range(-0.99f, 0.99f)]
@@ -93,8 +93,23 @@ public class Polygon : MonoBehaviour
 		{
 			SetDirection(collision.name);
 		}
+		else if (collision.tag == "Bullet")
+		{
+			collision.gameObject.GetComponent<TargetPolygons>().ResetBullet();
+			LoseHealth(collision.gameObject.GetComponent<TargetPolygons>().power);
+		}
 	}
-	
+
+	public void LoseHealth(float amount)
+	{
+		currentHealth -= amount;
+		if (currentHealth < 0) 
+		{
+			currentHealth = 0;
+			transform.parent.GetComponent<PolygonEmitter>().PopPolygon(int.Parse(this.name.Substring(0,1)));
+		}
+	}
+
 	public void SetColor(string color)
 	{
 		switch(color)
