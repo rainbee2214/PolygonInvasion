@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TargetPolygons : MonoBehaviour 
+public class Bullet: MonoBehaviour 
 {
 	public Vector2 OUT_OF_VIEW;
 	public Transform target;
@@ -12,6 +12,8 @@ public class TargetPolygons : MonoBehaviour
 
 	public float delay = 2f;
 	float nextShootTime;
+
+	Transform currentTarget;
 
 	public void TurnOn()
 	{
@@ -24,10 +26,13 @@ public class TargetPolygons : MonoBehaviour
 	}
 
     void Update() {
+
+		if (currentTarget != target.gameObject.GetComponent<PolygonEmitter>().GetFrontPolygon())
+			currentTarget = target.gameObject.GetComponent<PolygonEmitter>().GetFrontPolygon();
 		if (turnedOn)
 		{
 			float step = speed * Time.deltaTime;
-			transform.position = Vector3.MoveTowards(transform.position, target.gameObject.GetComponent<PolygonEmitter>().GetFrontPolygon().position, step);
+			transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, step);
 		}
 		if (Time.time > nextShootTime) TurnOn();
 

@@ -6,53 +6,62 @@ public class PolygonEmitter : MonoBehaviour
 {
 	List<GameObject> polygonPool;
 	int poolSize = 80;
+	int frontOfPool;
 
-	public List<GameObject> currentPolygons;
+	public List<int> currentPolygonIndexes;
 	int currentSize = 20;
+	int frontOfCurrentRound;
 
 	public bool sendRound;
 
 	void Start () 
 	{
 		CreatePolygonPool();	
+		frontOfCurrentRound = 0;
+		frontOfPool = 0;
 		SendRound();
 	}
 	
 	void Update () 
 	{
 		if (sendRound) SendRound();
-		Debug.Log(GetFrontPolygon());
 	}	
 
 	void SendRound()
 	{
 		sendRound = false;
+		int count = frontOfCurrentRound;
 		for (int i = 0; i < currentSize; i++)
 		{
-			if (i < polygonPool.Count)
-			{
-				currentPolygons.Add(polygonPool[i]);
-				polygonPool.RemoveAt(i);
-			}
+			if (count >= poolSize) count = 0;
+			SendPolygon(count, i*0.25f);
+			count++;
 		}
-		for (int i = 0; i < currentPolygons.Count; i++)
-		{
-			currentPolygons[i].name = (i+"Current");
-			currentPolygons[i].gameObject.GetComponent<Polygon>().UnFreezePolygon();
-		}
+		frontOfCurrentRound = count;
 	}
 
-	public void PopPolygon(int index)
+	void SendPolygon(int index, float delay)
 	{
-		currentPolygons[index].gameObject.GetComponent<Polygon>().ResetPolygon();
-		polygonPool.Add(currentPolygons[index]);
-		currentPolygons.RemoveAt(index);
-		polygonPool[polygonPool.Count - 1].name = (polygonPool.Count+"");
+		currentPolygonIndexes.Add(index);
+		if (index < 10) polygonPool[index].name = "0"+index+"Current";
+		else polygonPool[index].name = index+"Current";
+		polygonPool[index].transform.parent = transform;
+		polygonPool[index].gameObject.GetComponent<Polygon>().ConfigurePolygon("triangle", "right", "red", 0.1f, delay, 100f);
+		polygonPool[index].gameObject.GetComponent<Polygon>().UnFreezePolygon();
+	}
+
+	public void ResetPolygon(int index)
+	{
+		currentPolygonIndexes.Remove(index);
+		polygonPool[index].name = "Pooled";
+		polygonPool[index].transform.parent = transform;
+		polygonPool[index].transform.rotation = Quaternion.identity;
+		polygonPool[index].gameObject.GetComponent<Polygon>().FreezePolygon();
 	}
 
 	public Transform GetFrontPolygon()
 	{
-		return currentPolygons[0].transform;
+		return polygonPool[currentPolygonIndexes[0]].transform;
 	}
 
 	void CreatePolygonPool()

@@ -5,26 +5,26 @@ public class Polygon : MonoBehaviour
 {
 	static Vector2 OUT_OF_VIEW = new Vector2(-40f, -15f);
 	[Range(-100f, 100f)]
-	public float currentRotationSpeed;
+	float currentRotationSpeed;
 	[Range(-0.99f, 0.99f)]
-	public float currentVelocity;
-	public float currentDelay;
+	float currentVelocity;
+	float currentDelay;
 
 	public Material[] materials;
 	public Color[] colors;
-	public Color currentColor;
-	public Material currentMaterial;
-	public string currentDirection;
+	Color currentColor;
+	Material currentMaterial;
+	string currentDirection;
 
-	public float hVelocity;
-	public float vVelocity;
-	public Vector2 currentPosition;
-	public float startTime;
+	float hVelocity;
+	float vVelocity;
+	Vector2 currentPosition;
+	float startTime;
 
-	public bool frozen = true;
+	bool frozen = true;
 
-	public float maxHealth;
-	public float currentHealth;
+	float maxHealth = 10f;
+	float currentHealth;
 
 	float lastVelocity;
 	bool changeMaterial;
@@ -44,7 +44,13 @@ public class Polygon : MonoBehaviour
 		ConfigurePolygon("line", "right", "red", 0.15f, delay, 100f);
 	}
 
-	public void ConfigurePolygon(string material, string direction, string color, float velocity, float delay, float rotation)
+	public void ConfigurePolygon
+		(string material, 
+		 string direction, 
+		 string color, 
+		 float velocity, 
+		 float delay, 
+		 float rotation)
 	{
 		SetMaterials();
 		startTime = Time.time;
@@ -84,7 +90,7 @@ public class Polygon : MonoBehaviour
 		else
 		{
 			gameObject.transform.position = currentPosition;
-		}
+		} 
 	}
 
 	void OnTriggerEnter2D(Collider2D collision)
@@ -95,19 +101,36 @@ public class Polygon : MonoBehaviour
 		}
 		else if (collision.tag == "Bullet")
 		{
-			collision.gameObject.GetComponent<TargetPolygons>().ResetBullet();
-			LoseHealth(collision.gameObject.GetComponent<TargetPolygons>().power);
+			collision.gameObject.GetComponent<Bullet>().ResetBullet();
+			LoseHealth(collision.gameObject.GetComponent<Bullet>().power);
 		}
 	}
 
 	public void LoseHealth(float amount)
 	{
 		currentHealth -= amount;
-		if (currentHealth < 0) 
+		if (currentHealth <= 0) 
 		{
 			currentHealth = 0;
-			transform.parent.GetComponent<PolygonEmitter>().PopPolygon(int.Parse(this.name.Substring(0,1)));
+			ResetPolygon();
+			transform.parent.GetComponent<PolygonEmitter>().ResetPolygon(int.Parse(this.name.Substring(0,2)));
 		}
+	}
+	
+	public void ResetPolygon()
+	{
+		currentPosition = OUT_OF_VIEW;
+		frozen = true;
+	}
+
+	public void FreezePolygon()
+	{
+		frozen = true;
+	}
+	
+	public void UnFreezePolygon()
+	{
+		frozen = false;
 	}
 
 	public void SetColor(string color)
@@ -124,6 +147,16 @@ public class Polygon : MonoBehaviour
 		case "Pink": case "pink": currentColor = colors[7]; break;
 		default: break;
 		}
+	}
+	
+	public void SetColor(int colorIndex)
+	{
+		if (colorIndex <= colors.Length)currentColor = colors[0];
+	}
+	
+	public void SetColor(Color color)
+	{
+		currentColor = color;
 	}
 
 	public void SetMaterial(string material)
@@ -188,50 +221,6 @@ public class Polygon : MonoBehaviour
 		lastVelocity = currentVelocity;
 	}
 
-	void SetMaterials()
-	{
-		materials = new Material[8];
-		materials[0] = Instantiate (Resources.Load("Materials/Line", typeof(Material))) as Material;
-		materials[1] = Instantiate (Resources.Load("Materials/Triangle", typeof(Material))) as Material;
-		materials[2] = Instantiate (Resources.Load("Materials/Square", typeof(Material))) as Material;
-		materials[3] = Instantiate (Resources.Load("Materials/Pentagon", typeof(Material))) as Material;
-		materials[4] = Instantiate (Resources.Load("Materials/Hexagon", typeof(Material))) as Material;
-		materials[5] = Instantiate (Resources.Load("Materials/Heptagon", typeof(Material))) as Material;
-		materials[6] = Instantiate (Resources.Load("Materials/Octagon", typeof(Material))) as Material;
-		materials[7] = Instantiate (Resources.Load("Materials/Circle", typeof(Material))) as Material;
-	}
-	
-	public void SetColor(int colorIndex)
-	{
-		if (colorIndex < colors.Length)currentColor = colors[0];
-	}
-	
-	public void SetColor(Color color)
-	{
-		currentColor = color;
-	}
-	
-	public string GetDirection()
-	{
-		return currentDirection;
-	}
-
-	public void FreezePolygon()
-	{
-		frozen = true;
-	}
-	
-	public void UnFreezePolygon()
-	{
-		frozen = false;
-	}
-	
-	public void ResetPolygon()
-	{
-		currentPosition = OUT_OF_VIEW;
-		frozen = true;
-	}
-	
 	public void SetRotationSpeed(float rotationSpeed)
 	{
 		currentRotationSpeed = rotationSpeed;
@@ -246,20 +235,37 @@ public class Polygon : MonoBehaviour
 	{
 		currentDelay = delay;
 	}
-	
-	public float GetDelay()
-	{
-		return currentDelay;
-	}
-	
+
 	public void SetVelocity(float velocity)
 	{
 		currentVelocity = velocity;
 	}
-	
+
+	public string GetDirection()
+	{
+		return currentDirection;
+	}
+
+	public float GetDelay()
+	{
+		return currentDelay;
+	}
+
 	public float GetVelocity()
 	{
 		return currentVelocity;
 	}
-	
+
+	void SetMaterials()
+	{
+		materials = new Material[8];
+		materials[0] = Instantiate (Resources.Load("Materials/Line", typeof(Material))) as Material;
+		materials[1] = Instantiate (Resources.Load("Materials/Triangle", typeof(Material))) as Material;
+		materials[2] = Instantiate (Resources.Load("Materials/Square", typeof(Material))) as Material;
+		materials[3] = Instantiate (Resources.Load("Materials/Pentagon", typeof(Material))) as Material;
+		materials[4] = Instantiate (Resources.Load("Materials/Hexagon", typeof(Material))) as Material;
+		materials[5] = Instantiate (Resources.Load("Materials/Heptagon", typeof(Material))) as Material;
+		materials[6] = Instantiate (Resources.Load("Materials/Octagon", typeof(Material))) as Material;
+		materials[7] = Instantiate (Resources.Load("Materials/Circle", typeof(Material))) as Material;
+	}
 }
