@@ -103,6 +103,10 @@ public class Polygon : MonoBehaviour
 			collision.gameObject.GetComponent<Bullet>().ResetBullet();
 			LoseHealth(collision.gameObject.GetComponent<Bullet>().power);
 		}
+		else if (!frozen && collision.tag == "Laser")
+		{
+			LoseHealth(collision.gameObject.GetComponentInParent<Laser>().GetPower());
+		}
 	}
 
 	public void LoseHealth(float amount)
@@ -114,6 +118,7 @@ public class Polygon : MonoBehaviour
 			ResetPolygon();
 			transform.parent.GetComponent<PolygonEmitter>().ResetPolygon(int.Parse(this.name.Substring(0,2)));
 		}
+		Debug.Log(currentHealth);
 	}
 	
 	public void ResetPolygon()

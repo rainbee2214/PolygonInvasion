@@ -8,7 +8,7 @@ public class Bullet: MonoBehaviour
     public float speed;
     
 	public bool turnedOn = false;
-	public float power = 50f;
+	public float power = 1f;
 
 	public float delay = 2f;
 	float nextShootTime;

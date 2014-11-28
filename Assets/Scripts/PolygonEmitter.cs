@@ -40,12 +40,13 @@ public class PolygonEmitter : MonoBehaviour
 		frontOfCurrentRound = count;
 	}
 
-	void SendPolygon(int index, float delay)
+	void SendPolygon(int index, float delay, float velocity = 1f)
 	{
 		currentPolygonIndexes.Add(index);
 		if (index < 10) polygonPool[index].name = "0"+index+"Current";
 		else polygonPool[index].name = index+"Current";
 		polygonPool[index].transform.parent = transform;
+		polygonPool[index].gameObject.GetComponent<Polygon>().SetVelocity(velocity);
 		polygonPool[index].gameObject.GetComponent<Polygon>().ConfigurePolygon("triangle", "right", "red", 0.1f, delay, 100f);
 		polygonPool[index].gameObject.GetComponent<Polygon>().UnFreezePolygon();
 	}
