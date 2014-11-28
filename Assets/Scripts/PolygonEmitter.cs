@@ -10,7 +10,7 @@ public class PolygonEmitter : MonoBehaviour
 
 	public List<int> currentPolygonIndexes;
 	int currentSize = 20;
-	int frontOfCurrentRound;
+	public int frontOfCurrentRound;
 
 	public bool sendRound;
 

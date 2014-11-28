@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Polygon : MonoBehaviour 
 {
-	static Vector2 OUT_OF_VIEW = new Vector2(-40f, -15f);
 	[Range(-100f, 100f)]
 	float currentRotationSpeed;
 	[Range(-0.99f, 0.99f)]
@@ -99,7 +98,7 @@ public class Polygon : MonoBehaviour
 		{
 			SetDirection(collision.name);
 		}
-		else if (collision.tag == "Bullet")
+		else if (collision.tag == "Bullet" && !frozen)
 		{
 			collision.gameObject.GetComponent<Bullet>().ResetBullet();
 			LoseHealth(collision.gameObject.GetComponent<Bullet>().power);
@@ -119,7 +118,7 @@ public class Polygon : MonoBehaviour
 	
 	public void ResetPolygon()
 	{
-		currentPosition = OUT_OF_VIEW;
+		currentPosition = GameController.OUT_OF_VIEW;
 		frozen = true;
 	}
 

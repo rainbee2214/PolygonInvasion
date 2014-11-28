@@ -16,7 +16,7 @@ public class Weapon : MonoBehaviour
 	float delay;
 	float power;
 
-	float nextShootTime;
+	float nextShootTime = 4f;
 
 	public void TurnOn()
 	{
@@ -66,24 +66,29 @@ public class Weapon : MonoBehaviour
 		ConfigureWeapon(this.gameObject.tag, true);
 		Debug.Log("I am a "+weapon+" and I target enemies: "+target+". My range is "
 		          + range+", my frequency is "+delay+" and my power is "+power+".");
+
 	}
+
 
 	void Update () 
 	{
-		if (turnedOn) Fire();
+		if (turnedOn && Time.time > nextShootTime) Fire();
 	}
 
 	public void Fire()
 	{
-		if (Time.time > nextShootTime)
-		{
 			//Fire weapon
-			Debug.Log("Shooting " + this.name);
+		if (GameController.controller.PolygonEmitter.gameObject.GetComponent<PolygonEmitter>().GetFrontPolygon() != null)
+		{
+			GameController.controller.bulletPool[GameController.controller.frontOfPool].gameObject.transform.position = transform.position;
+			GameController.controller.bulletPool[GameController.controller.frontOfPool].gameObject.GetComponent<Bullet>().TurnOn();
+			GameController.controller.bulletPool[GameController.controller.frontOfPool].gameObject.GetComponent<Bullet>().parentObject = this.gameObject;
 			nextShootTime = Time.time + delay;
+			GameController.controller.IncrementFrontOfBulletPool();
 		}
 	}
 
-	public void ConfigureWeapon(string weapon, bool target, float range = 0f, float delay = 0f, float power = 0f)
+	public void ConfigureWeapon(string weapon, bool target, float range = 0f, float delay = 1f, float power = 0f)
 	{
 		configure = false;
 		this.weapon = weapon;

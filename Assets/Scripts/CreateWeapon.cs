@@ -32,10 +32,11 @@ public class CreateWeapon : MonoBehaviour
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			Vector3 mousePosition = ray.origin + ray.direction;
-
+			mousePosition.z = 0f;
 			newWeapon = Instantiate(Resources.Load("Prefabs/"+this.name, typeof(GameObject)), mousePosition, Quaternion.identity) as GameObject;
 			//newWeapon.gameObject.GetComponent<Weapon>().
 			pickedUp = true;
+			newWeapon.transform.position = new Vector3(newWeapon.transform.position.x, newWeapon.transform.position.y, 0f);
 		}
 
 		if (pickedUp)

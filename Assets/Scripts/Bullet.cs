@@ -13,7 +13,7 @@ public class Bullet: MonoBehaviour
 	public float delay = 2f;
 	float nextShootTime;
 
-	Transform currentTarget;
+	public GameObject parentObject;
 
 	public void TurnOn()
 	{
@@ -27,25 +27,30 @@ public class Bullet: MonoBehaviour
 
     void Update() 
 	{
-		if (target == null) target = GameController.controller.PolygonEmitter;
-		if (currentTarget != target.gameObject.GetComponent<PolygonEmitter>().GetFrontPolygon())
-			currentTarget = target.gameObject.GetComponent<PolygonEmitter>().GetFrontPolygon();
-		if (currentTarget != null)
+
+		if (turnedOn)
 		{
-			if (turnedOn)
-			{
-				float step = speed * Time.deltaTime;
-				transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, step);
-			}
-			if (Time.time > nextShootTime) TurnOn();
+			float step = speed * Time.deltaTime;
+			if (GameController.controller.PolygonEmitter
+			    .GetComponent<PolygonEmitter>().GetFrontPolygon() != null)
+					transform.position = Vector3.MoveTowards(transform.position, 
+			                                         GameController.controller.PolygonEmitter
+			                                         .GetComponent<PolygonEmitter>().GetFrontPolygon().position, 
+			                                         step);
 		}
 
     }
 
+	public void SetLocation(Transform target)
+	{
+		transform.position = target.position;
+	}
+
 	public void ResetBullet()
 	{
-		transform.position = OUT_OF_VIEW;
+		transform.position = parentObject.transform.position;
 		TurnOff();
 		nextShootTime = Time.time + delay;
 	}
+
 }
