@@ -6,17 +6,21 @@ public class Weapon : MonoBehaviour
 	public bool configure;
 	public bool turnedOn = false;
 
-	float baseLineRange;
-	float baseLineDelay;
-	float baseLinePower;
+	protected float baseLineRange;
+	protected float baseLineDelay;
+	protected float baseLinePower;
 
-	string weapon;
-	bool target;
-	float range;
-	float delay;
-	float power;
+	protected string weapon;
+	protected bool target;
+	protected float range;
+	protected float delay;
+	protected float power;
 
-	float nextShootTime = 4f;
+	protected float nextShootTime = 4f;
+
+	protected string weaponType;
+
+	protected GameObject laser;
 
 	public void TurnOn()
 	{
@@ -30,7 +34,8 @@ public class Weapon : MonoBehaviour
 
 	void SetBaseLine()
 	{
-		switch(gameObject.tag)
+		weaponType = gameObject.tag;
+		switch(weaponType)
 		{
 		case "Gun":
 		{
@@ -41,6 +46,8 @@ public class Weapon : MonoBehaviour
 		}
 		case "Laser":
 		{
+			laser = Instantiate(Resources.Load("Laser", typeof(GameObject))) as GameObject;
+			laser.SetActive(false);
 			baseLineRange = 5f;
 			baseLineDelay = 1f;
 			baseLinePower = 1f;
@@ -48,9 +55,7 @@ public class Weapon : MonoBehaviour
 		}
 		case "Bomb":
 		{
-			baseLineRange = 2f;
-			baseLineDelay = 10f;
-			baseLinePower = 10f;
+	
 			break;
 		}
 		default:break;
@@ -77,14 +82,29 @@ public class Weapon : MonoBehaviour
 
 	public void Fire()
 	{
-			//Fire weapon
 		if (GameController.controller.PolygonEmitter.gameObject.GetComponent<PolygonEmitter>().GetFrontPolygon() != null)
 		{
-			GameController.controller.bulletPool[GameController.controller.frontOfPool].gameObject.transform.position = transform.position;
-			GameController.controller.bulletPool[GameController.controller.frontOfPool].gameObject.GetComponent<Bullet>().TurnOn();
-			GameController.controller.bulletPool[GameController.controller.frontOfPool].gameObject.GetComponent<Bullet>().parentObject = this.gameObject;
+			Debug.Log(weaponType+" firing");
+			switch (weaponType)
+			{
+			case "Gun": case "gun":
+			{
+				GameController.controller.bulletPool[GameController.controller.frontOfPool].gameObject.transform.position = transform.position;
+				GameController.controller.bulletPool[GameController.controller.frontOfPool].gameObject.GetComponent<Bullet>().TurnOn();
+				GameController.controller.bulletPool[GameController.controller.frontOfPool].gameObject.GetComponent<Bullet>().parentObject = this.gameObject;
+				GameController.controller.IncrementFrontOfBulletPool();
+				break;
+			}
+			case "Laser": case "laser":
+			{
+				break;
+			}
+			case "Bomb": case "bomb":
+			{
+				break;
+			}
+			}
 			nextShootTime = Time.time + delay;
-			GameController.controller.IncrementFrontOfBulletPool();
 		}
 	}
 
