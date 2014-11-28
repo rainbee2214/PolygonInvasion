@@ -34,6 +34,7 @@ public class CreateWeapon : MonoBehaviour
 			Vector3 mousePosition = ray.origin + ray.direction;
 
 			newWeapon = Instantiate(Resources.Load("Prefabs/"+this.name, typeof(GameObject)), mousePosition, Quaternion.identity) as GameObject;
+			//newWeapon.gameObject.GetComponent<Weapon>().
 			pickedUp = true;
 		}
 

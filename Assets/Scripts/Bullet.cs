@@ -25,16 +25,20 @@ public class Bullet: MonoBehaviour
 		turnedOn = false;
 	}
 
-    void Update() {
-
+    void Update() 
+	{
+		if (target == null) target = GameController.controller.PolygonEmitter;
 		if (currentTarget != target.gameObject.GetComponent<PolygonEmitter>().GetFrontPolygon())
 			currentTarget = target.gameObject.GetComponent<PolygonEmitter>().GetFrontPolygon();
-		if (turnedOn)
+		if (currentTarget != null)
 		{
-			float step = speed * Time.deltaTime;
-			transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, step);
+			if (turnedOn)
+			{
+				float step = speed * Time.deltaTime;
+				transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, step);
+			}
+			if (Time.time > nextShootTime) TurnOn();
 		}
-		if (Time.time > nextShootTime) TurnOn();
 
     }
 

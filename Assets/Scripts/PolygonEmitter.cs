@@ -61,6 +61,7 @@ public class PolygonEmitter : MonoBehaviour
 
 	public Transform GetFrontPolygon()
 	{
+		if (currentPolygonIndexes.Count == 0) return null;
 		return polygonPool[currentPolygonIndexes[0]].transform;
 	}
 
