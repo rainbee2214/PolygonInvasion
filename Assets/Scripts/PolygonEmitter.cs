@@ -7,15 +7,23 @@ public class PolygonEmitter : MonoBehaviour
 	List<GameObject> polygonPool;
 	int poolSize = 80;
 	int frontOfPool;
+	int currentSize = 20;
 
 	public List<int> currentPolygonIndexes;
-	int currentSize = 20;
 	public int frontOfCurrentRound;
-
 	public bool sendRound;
+
+    static string defaultColor;
+    static float defaultDelay = 0.25f;
+    static float defaultVelocity = 1f;
+
+    public string nextColor = defaultColor;
+    public float nextDelay = defaultDelay;
+    public float nextVelocity = defaultVelocity;
 
 	void Start () 
 	{
+
 		CreatePolygonPool();	
 		frontOfCurrentRound = 0;
 		frontOfPool = 0;
@@ -34,7 +42,7 @@ public class PolygonEmitter : MonoBehaviour
 		for (int i = 0; i < currentSize; i++)
 		{
 			if (count >= poolSize) count = 0;
-			SendPolygon(count, i*0.25f);
+			SendPolygon(count, i*nextDelay);
 			count++;
 		}
 		frontOfCurrentRound = count;
