@@ -34,7 +34,7 @@ public class Laser : Weapon
 //		          + range+", my delay is "+delay+" and my power is "+power+".");
 	}
 	
-	void Update () 
+	void FixedUpdate () 
 	{
 		if (turnedOn && Time.time > nextShootTime) Fire();
 		if (turnedOn && Time.time > nextRotation) SpinLasers();

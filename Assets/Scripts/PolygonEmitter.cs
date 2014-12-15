@@ -22,7 +22,7 @@ public class PolygonEmitter : MonoBehaviour
 		SendRound();
 	}
 	
-	void Update () 
+	void FixedUpdate () 
 	{
 		if (sendRound) SendRound();
 	}	

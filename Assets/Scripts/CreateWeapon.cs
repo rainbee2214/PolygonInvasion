@@ -20,7 +20,7 @@ public class CreateWeapon : MonoBehaviour
 
     }
 
-	void Update () 
+	void FixedUpdate () 
 	{
 		if (pickedUp && Input.GetMouseButtonDown(0))
 		{

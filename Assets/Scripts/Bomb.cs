@@ -16,7 +16,7 @@ public class Bomb : Weapon
 //		          + range+", my delay is "+delay+" and my power is "+power+".");
 	}
 	
-	void Update () 
+	void FixedUpdate () 
 	{
 		if (turnedOn && Time.time > nextShootTime) Fire();
 	}

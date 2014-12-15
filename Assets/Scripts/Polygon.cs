@@ -118,7 +118,6 @@ public class Polygon : MonoBehaviour
 			ResetPolygon();
 			transform.parent.GetComponent<PolygonEmitter>().ResetPolygon(int.Parse(this.name.Substring(0,2)));
 		}
-		Debug.Log(currentHealth);
 	}
 	
 	public void ResetPolygon()

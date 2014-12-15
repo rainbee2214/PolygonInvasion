@@ -25,7 +25,7 @@ public class Bullet: MonoBehaviour
 		turnedOn = false;
 	}
 
-    void Update() 
+    void FixedUpdate() 
 	{
 
 		if (turnedOn)
