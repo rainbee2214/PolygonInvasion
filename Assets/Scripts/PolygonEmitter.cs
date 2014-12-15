@@ -46,6 +46,7 @@ public class PolygonEmitter : MonoBehaviour
 		if (index < 10) polygonPool[index].name = "0"+index+"Current";
 		else polygonPool[index].name = index+"Current";
 		polygonPool[index].transform.parent = transform;
+        polygonPool[index].gameObject.SetActive(true);
 		polygonPool[index].gameObject.GetComponent<Polygon>().SetVelocity(velocity);
 		polygonPool[index].gameObject.GetComponent<Polygon>().ConfigurePolygon("triangle", "right", "red", 0.1f, delay, 100f);
 		polygonPool[index].gameObject.GetComponent<Polygon>().UnFreezePolygon();
@@ -58,6 +59,7 @@ public class PolygonEmitter : MonoBehaviour
 		polygonPool[index].transform.parent = transform;
 		polygonPool[index].transform.rotation = Quaternion.identity;
 		polygonPool[index].gameObject.GetComponent<Polygon>().FreezePolygon();
+        polygonPool[index].gameObject.SetActive(false);
 	}
 
 	public Transform GetFrontPolygon()
@@ -80,6 +82,7 @@ public class PolygonEmitter : MonoBehaviour
 			polygonPool[i].gameObject.GetComponent<Polygon>().ConfigurePolygon(i*0.25f);
 			polygonPool[i].gameObject.GetComponent<Polygon>().FreezePolygon();
 			polygonPool[i].name = i+"Pooled";
+            polygonPool[i].gameObject.SetActive(false);
 		}
 		int index = 0;
 		for (int i = 0; i < poolSize; i++)

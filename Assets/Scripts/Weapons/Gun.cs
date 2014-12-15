@@ -23,6 +23,7 @@ public class Gun : Weapon
 
 	public void Fire()
 	{
+        //So yucky. Going to fix soon. Working on more fun things atm :)
 		if (GameController.controller.PolygonEmitter.gameObject.GetComponent<PolygonEmitter>().GetFrontPolygon() != null)
 		{
 			GameController.controller.bulletPool[GameController.controller.frontOfPool].gameObject.transform.position = transform.position;

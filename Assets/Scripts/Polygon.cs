@@ -92,21 +92,27 @@ public class Polygon : MonoBehaviour
 		} 
 	}
 
-	void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D other)
 	{
-		if (collision.tag == "Buffer")
+        if (other.tag == "Buffer")
 		{
-			SetDirection(collision.name);
+            SetDirection(other.name);
 		}
-		else if (collision.tag == "Bullet" && !frozen)
+        else if (other.tag == "Bullet" && !frozen)
 		{
-			collision.gameObject.GetComponent<Bullet>().ResetBullet();
-			LoseHealth(collision.gameObject.GetComponent<Bullet>().power);
+            other.gameObject.GetComponent<Bullet>().ResetBullet();
+            LoseHealth(other.gameObject.GetComponent<Bullet>().power);
 		}
-		else if (!frozen && collision.tag == "Laser")
+        else if (!frozen && other.tag == "Laser")
 		{
-			LoseHealth(collision.gameObject.GetComponentInParent<Laser>().GetPower());
+            LoseHealth(other.gameObject.GetComponentInParent<Laser>().GetPower());
 		}
+        else if (other.tag == "EndOfLevel")
+        {
+            Debug.Log("Hit end of level");
+            ResetPolygon();
+            transform.parent.GetComponent<PolygonEmitter>().ResetPolygon(int.Parse(this.name.Substring(0, 2)));
+        }
 	}
 
 	public void LoseHealth(float amount)
