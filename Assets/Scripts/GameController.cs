@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public static int POOL_SIZE = 80;
 
     public static string DEFAULT_COLOR = "Red";
+    public static string DEFAULT_SHAPE = "Triangle";
     public static float DEFULT_DELAY = 0.25f;
     public static float DEFAULT_VELOCITY = 1f;
 
