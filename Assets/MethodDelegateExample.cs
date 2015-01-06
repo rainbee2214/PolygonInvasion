@@ -2,9 +2,10 @@
 using System;
 using System.Collections;
 
-public class FunctionDelegateExample : MonoBehaviour 
+//Named separately
+public class MethodDelegateExample : MonoBehaviour 
 {
-    public enum FunctionOption
+    public enum Method
     {
         Cool,
         Awesome,
@@ -12,22 +13,23 @@ public class FunctionDelegateExample : MonoBehaviour
         Great
     }
 
-    public FunctionOption function;
+    public Method method;
 
-    private delegate string FunctionDelegate(string t);
-    private static FunctionDelegate[] functionDelegates =
+    private delegate string MethodDelegate(string t);
+    private static MethodDelegate[] methodDelegates =
 	{
 		Cool, 
         Awesome, 
         Smart, 
         Great
 	};
-	
+
+    MethodDelegate m;
     void Update()
     {
-        FunctionDelegate f = functionDelegates[(int)function];
+        m = methodDelegates[(int)method];
         string t = "Sarah";
-        Debug.Log(f(t));
+        Debug.Log(m(t));
     }
 
     public static string Cool(string t)
