@@ -55,8 +55,8 @@ public class PolygonEmitter : MonoBehaviour
 		polygonPool[index].transform.parent = transform;
         polygonPool[index].gameObject.SetActive(true);
         Polygon polygon = polygonPool[index].gameObject.GetComponent<Polygon>();
-        polygon.SetVelocity(velocity);
-        polygon.ConfigurePolygon(shape, "right", color, 0.1f, delay, 100f);
+        //polygon.SetVelocity(velocity);
+        //polygon.ConfigurePolygon(shape, "right", color, 0.1f, delay, 100f);
         polygon.UnFreezePolygon();
 	}
 
@@ -87,7 +87,7 @@ public class PolygonEmitter : MonoBehaviour
 		{
 			polygonPool[i].transform.parent = transform;
 			polygonPool[i].gameObject.name = "Polygon"+i;
-			polygonPool[i].gameObject.GetComponent<Polygon>().ConfigurePolygon(i*0.25f);
+			//polygonPool[i].gameObject.GetComponent<Polygon>().ConfigurePolygon(i*0.25f);
 			polygonPool[i].gameObject.GetComponent<Polygon>().FreezePolygon();
 			polygonPool[i].name = i+"Pooled";
             polygonPool[i].gameObject.SetActive(false);
@@ -96,8 +96,8 @@ public class PolygonEmitter : MonoBehaviour
 		for (int i = 0; i < poolSize; i++)
 		{
 			if (i%10 == 0 && i != 0) index++;
-			if (index >= polygonPool[i].gameObject.GetComponent<Polygon>().materials.Length) index = 0;
-			polygonPool[i].gameObject.GetComponent<Polygon>().SetMaterial(index);
+            //if (index >= polygonPool[i].gameObject.GetComponent<Polygon>().materials.Length) index = 0;
+            //polygonPool[i].gameObject.GetComponent<Polygon>().SetMaterial(index);
 		}
 	}
 }
