@@ -5,28 +5,21 @@ using System.Collections.Generic;
 public class PolygonEmitter : MonoBehaviour 
 {
 	List<GameObject> polygonPool;
-	int poolSize = 80;
-	int frontOfPool;
+	int poolSize = GameController.POOL_SIZE;
 	int currentSize = 20;
-
 	public List<int> currentPolygonIndexes;
-	public int frontOfCurrentRound;
+
+	public int frontOfCurrentRound = 0;
+	int frontOfPool = 0;
+
 	public bool sendRound;
-
-    static string defaultColor;
-    static float defaultDelay = 0.25f;
-    static float defaultVelocity = 1f;
-
-    public string nextColor = defaultColor;
-    public float nextDelay = defaultDelay;
-    public float nextVelocity = defaultVelocity;
+    public string nextColor = GameController.DEFAULT_COLOR;
+    public float nextDelay = GameController.DEFULT_DELAY;
+    public float nextVelocity = GameController.DEFAULT_VELOCITY;
 
 	void Start () 
 	{
-
 		CreatePolygonPool();	
-		frontOfCurrentRound = 0;
-		frontOfPool = 0;
 		SendRound();
 	}
 	

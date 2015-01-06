@@ -109,7 +109,6 @@ public class Polygon : MonoBehaviour
 		}
         else if (other.tag == "EndOfLevel")
         {
-            Debug.Log("Hit end of level");
             ResetPolygon();
             transform.parent.GetComponent<PolygonEmitter>().ResetPolygon(int.Parse(this.name.Substring(0, 2)));
         }
