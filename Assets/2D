@@ -15,3 +15,21 @@ GetAxisRaw: returns an integer value (good for accuracy in 2D games)
 OnMouseDown: Can detect a click on a collider
 
 [RequireComponent(typeof(NameOfScript))]
+
+Time.deltaTime : the time between each update call (makes movement per second rather than per update)
+
+Vector2/3 : v.normalized * speed * Time.deltaTime;
+
+rigidbody.MovePosition(transform.position + movement);
+
+
+Physics.Raycast (ray, ...) will return true if the raycast has hit something
+out hit : using the keyword out to get information 'out of' the hit variable
+Ray Casting:
+Ray ray = Camera.main.ScreenPointRoRay(Input.mousePosition);
+RaycashHit hit;
+
+if (Physics.Raycast (ray, out hit, length, layerMask))
+{
+	
+}
