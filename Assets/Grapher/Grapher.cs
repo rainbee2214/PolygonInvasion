@@ -93,7 +93,7 @@ public class Grapher : MonoBehaviour
 			points[i].name = "Point"+i;
 			temp.x = origin.x + (i/10f);
 			points[i].transform.position = temp;
-			points[i].renderer.material.color = currentColor;
+			points[i].GetComponent<Renderer>().material.color = currentColor;
 			//if (polarCoordinates) points[i].transform.position = SwitchToPolar(temp);
 		}
 	}
