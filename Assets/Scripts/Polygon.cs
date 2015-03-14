@@ -69,9 +69,9 @@ public class Polygon : MonoBehaviour
 
 		if (changeMaterial) 
 		{
-			Material[] temp = gameObject.renderer.materials;
+			Material[] temp = gameObject.GetComponent<Renderer>().materials;
 			temp[0] = currentMaterial;
-			gameObject.renderer.materials = temp;
+			gameObject.GetComponent<Renderer>().materials = temp;
 
 			changeMaterial = false;
 		}
