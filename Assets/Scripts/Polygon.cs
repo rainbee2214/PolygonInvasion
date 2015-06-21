@@ -252,7 +252,7 @@ public class Polygon : MonoBehaviour
     public void SetMaterial(Material material)
     {
         currentMaterial = material;
-        gameObject.renderer.material = currentMaterial;
+        gameObject.GetComponent<Renderer>().material = currentMaterial;
     }
     public void SetMaterial(string material)
     {
@@ -276,7 +276,7 @@ public class Polygon : MonoBehaviour
             case "circle": currentMaterial = materials[7]; break;
             default: break;
         }
-        gameObject.renderer.material = currentMaterial;
+        gameObject.GetComponent<Renderer>().material = currentMaterial;
     }
 
     void Start()

@@ -28,7 +28,7 @@ public class CreateWeapon : MonoBehaviour
 			if (pickedUp) pickedUp = SetDown();
 		}
 
-		if (gameObject.guiText.HitTest(Input.mousePosition) && Input.GetMouseButtonDown(0))
+		if (gameObject.GetComponent<GUIText>().HitTest(Input.mousePosition) && Input.GetMouseButtonDown(0))
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			Vector3 mousePosition = ray.origin + ray.direction;
