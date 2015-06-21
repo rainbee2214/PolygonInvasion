@@ -45,6 +45,9 @@ public class CreateWeapon  : MonoBehaviour
         //}
         Debug.Log(pickedUp);
 
+        //    Pickup(this.name);
+        //}
+        Debug.Log(pickedUp);
 		if (pickedUp)
 		{
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
