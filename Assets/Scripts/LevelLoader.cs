@@ -1,18 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using SSS.Level;
 
 public class LevelLoader : MonoBehaviour
 {
-    public string level = "Menu";
-    public bool clickToLoad = true;
-
-    void Update()
+    public void LoadLevel(string level)
     {
-        if (clickToLoad && Input.GetButtonDown("LoadLevel")) LoadLevel(level);
+        Level.Load(level);
     }
 
-    public void LoadLevel(string l)
+    public void QuitGame()
     {
-        Application.LoadLevel(l);
+        Application.Quit();
     }
 }

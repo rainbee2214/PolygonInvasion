@@ -27,17 +27,17 @@ public class Bullet: MonoBehaviour
 
     void FixedUpdate() 
 	{
-
-		if (turnedOn)
-		{
-			float step = speed * Time.deltaTime;
-			if (GameController.controller.PolygonEmitter
-			    .GetComponent<PolygonEmitter>().GetFrontPolygon() != null)
-					transform.position = Vector3.MoveTowards(transform.position, 
-			                                         GameController.controller.PolygonEmitter
-			                                         .GetComponent<PolygonEmitter>().GetFrontPolygon().position, 
-			                                         step);
-		}
+        //Find the transform to move towards
+		//if (turnedOn)
+		//{
+		//	float step = speed * Time.deltaTime;
+		//	if (GameController.controller.PolygonEmitter
+		//	    .GetComponent<PolygonEmitter>().GetFrontPolygon() != null)
+		//			transform.position = Vector3.MoveTowards(transform.position, 
+		//	                                         GameController.controller.PolygonEmitter
+		//	                                         .GetComponent<PolygonEmitter>().GetFrontPolygon().position, 
+		//	                                         step);
+		//}
 
     }
 
