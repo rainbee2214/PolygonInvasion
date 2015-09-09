@@ -10,7 +10,6 @@ public class MapTurnLocation : MonoBehaviour
     {
         if (other.tag == "Polygon")
         {
-            Debug.Log("Touching polygon");
             other.GetComponent<Polygon>().Move(transform.position+offset, direction);
         }
     }
