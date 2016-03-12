@@ -20,10 +20,19 @@ public class Polygon : MonoBehaviour
     public P.Direction dir = P.Direction.Down;
     void Update()
     {
+        if (GameController.controller.paused)
+        {
+            //TODO: unpause the shapes: something like this: if the game is paused, velocity = 0, use a trigger bool to set velocity back to dir when the game unpauses
+            // if (!paused && triggerBool): set triggerBool = true when paused = true
+            //I think, I'm tired and it's late.
+            rb2d.velocity = Vector2.zero;
+            return;
+        }
+
         if (move)
         {
             move = false;
-            Move(transform.position,dir);
+            Move(transform.position, dir);
         }
         if (stop)
 

@@ -2,12 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GameController : BaseController<GameController> 
+public class GameController : BaseController<GameController>
 {
-	void Awake()
-	{
-        controller = this;
-	}
+    public bool paused = false;
+
+    void Awake()
+    {
+        if (controller == null)
+        {
+            controller = this;
+        }
+        else if (controller != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
 
 }
