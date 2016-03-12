@@ -4,7 +4,30 @@ using System.Collections.Generic;
 
 public class GameController : BaseController<GameController>
 {
-    public bool paused = false;
+    public bool pause;
+
+     bool paused = false;
+    public bool Paused
+    {
+        get { return paused; }
+        set
+        {
+            if (value)
+            {
+                //pausing game
+                Debug.Log("Pausing game");
+            }
+            else
+            {
+                Debug.Log("Unpausing game");
+                PolygonSpawner.spawner.UnpausePolygons();
+                //unpausing game
+            }
+            paused = value;
+        }
+    }
+
+    public bool unPaused = false;
 
     void Awake()
     {
@@ -18,5 +41,9 @@ public class GameController : BaseController<GameController>
         }
     }
 
+    void Update()
+    {
+       if (pause) Paused = pause;
+    }
 
 }

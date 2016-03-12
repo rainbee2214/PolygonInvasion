@@ -40,7 +40,6 @@ public class PolygonSpawner : MonoBehaviour
         polygonSprites = Resources.LoadAll<Sprite>("Sprites/Polygons");
         polygonPrefab = Resources.Load<GameObject>("Prefabs/Polygon");
         CreatePolygonPool();
-
     }
 
 
@@ -67,6 +66,17 @@ public class PolygonSpawner : MonoBehaviour
         level++;
     }
 
+    public void UnpausePolygons()
+    {
+        foreach(Polygon p in polygonPool)
+        {
+            if (p.isActiveAndEnabled)
+            {
+                p.Move();
+            }
+        }
+    }
+
     IEnumerator SendRounds()
     {
         topPolygon = 0;
@@ -80,7 +90,7 @@ public class PolygonSpawner : MonoBehaviour
         while (runGame)
         {
             yield return StartCoroutine(SendRound(polygonSprites[topPolygon], colors[roundCount], dir, numberToSend, sendDelay));
-            while (GameController.controller.paused) yield return null;
+            while (GameController.controller.Paused) yield return null;
             yield return new WaitForSeconds(roundDelay);
         }
         runningGame = false;
@@ -98,7 +108,7 @@ public class PolygonSpawner : MonoBehaviour
             topOfPool++;
             if (topOfPool >= polygonPool.Count) topOfPool = 0;
             yield return new WaitForSeconds(delayBetween);
-            while (GameController.controller.paused) yield return null;
+            while (GameController.controller.Paused) yield return null;
         }
         Debug.Log("Done sending");
         roundCount++;
